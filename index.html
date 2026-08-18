@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat con Jesús</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos personalizados para el scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        /* Fondo de WhatsApp */
+        .bg-whatsapp-pattern {
+            background-color: #efeae2;
+            background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+            background-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body class="bg-gray-200 font-sans h-screen flex justify-center items-center">
+
+    <div class="w-full max-w-[340px] h-full sm:h-[80vh] sm:max-h-[600px] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden relative bg-[#efeae2]">
+        
+        <!-- Capa de textura de fondo -->
+        <div class="absolute inset-0 opacity-[0.06] pointer-events-none z-0 bg-whatsapp-pattern"></div>
+
+        <div class="bg-[#075E54] text-white flex items-center px-3 py-2 z-10 shadow-md">
+            <div class="flex items-center space-x-2 flex-grow cursor-pointer">
+                <!-- Flecha de regreso -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                
+                <!-- Foto de perfil - Emoji de Jesús (Piel clara) -->
+                <div class="bg-gray-300 rounded-full h-10 w-10 flex items-center justify-center text-2xl overflow-hidden shrink-0">
+                    🧔🏻‍♂️
+                </div>
+                
+                <!-- Info del contacto -->
+                <div class="flex flex-col -mt-1">
+                    <span class="font-semibold text-lg leading-tight">Jesús ✝️</span>
+                    <span id="status-text" class="text-xs text-[#d9fdd3] opacity-90">en línea</span>
+                </div>
+            </div>
+
+            <!-- Iconos de cabecera -->
+            <div class="flex items-center space-x-4 ml-4">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24"><path d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"/></svg>
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24"><path d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"/></svg>
+            </div>
+        </div>
+
+        <div id="chat-container" class="flex-1 overflow-y-auto p-4 z-10 flex flex-col space-y-3 relative scroll-smooth">
+            <!-- Aviso de encriptación -->
+            <div class="flex justify-center mb-4">
+                <div class="bg-[#FFF3C7] text-[#544B3D] text-xs py-1 px-3 rounded-lg text-center max-w-[85%] shadow-sm">
+                    <span class="inline-block mr-1">🔒</span> Los mensajes y las llamadas están protegidos con bendiciones de extremo a extremo. Nadie fuera de este chat puede leerlos.
+                </div>
+            </div>
+            
+            <!-- Los mensajes se inyectarán aquí dinámicamente -->
+        </div>
+
+        <div class="bg-[#f0f2f5] px-2 py-2 flex items-end space-x-2 z-10 w-full">
+            <div class="flex-1 bg-white rounded-full flex items-end px-2 py-1.5 shadow-sm min-h-[44px]">
+                <!-- Icono Cara Feliz -->
+                <button class="p-2 text-gray-500 hover:text-gray-600 transition-colors shrink-0">
+                    <svg viewBox="0 0 24 24" width="24" height="24" class="fill-current">
+                        <path d="M9.153 11.603c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962zm-3.204 1.362c-.026-.307-.131 5.218 6.063 5.551 6.066-.25 6.066-5.551 6.066-5.551-6.078 1.416-12.129 0-12.129 0zm11.363 1.108s-.669 1.959-5.051 1.959c-3.505 0-5.388-1.164-5.607-1.959 0 0 5.912 1.055 10.658 0zM11.804 1.011C5.609 1.011.978 6.033.978 12.228s4.826 10.761 11.021 10.761S23.02 18.423 23.02 12.228c.001-6.195-5.021-11.217-11.216-11.217zM12 21.354c-5.273 0-9.381-3.886-9.381-9.159s3.942-9.548 9.215-9.548 9.548 4.275 9.548 9.548c-.001 5.272-4.109 9.159-9.382 9.159zm3.108-9.751c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962z" />
+                    </svg>
+                </button>
+                
+                <form id="chat-form" class="flex-1 flex items-center m-0">
+                    <input
+                        type="text"
+                        id="message-input"
+                        placeholder="Mensaje"
+                        class="w-full bg-transparent outline-none px-2 py-1 max-h-24 resize-none"
+                        autocomplete="off"
+                    />
+                </form>
+                
+                <!-- Iconos de Adjunto y Cámara -->
+                <button class="p-2 text-gray-500 hover:text-gray-600 transition-colors shrink-0">
+                     <svg viewBox="0 0 24 24" width="24" height="24" class="fill-current">
+                        <path d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.57.57 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z" />
+                    </svg>
+                </button>
+                 <button class="p-2 text-gray-500 hover:text-gray-600 transition-colors shrink-0">
+                     <svg viewBox="0 0 24 24" width="24" height="24" class="fill-current">
+                        <path d="M21.385 6.634c-.122-.387-.457-.681-.856-.763l-2.09-.418-.865-1.73A1.47 1.47 0 0 0 16.257 3h-8.51c-.551 0-1.045.308-1.317.794l-.865 1.73-2.09.418c-.399.082-.734.376-.856.763A1.49 1.49 0 0 0 2.5 7.086v11.41c0 .828.672 1.5 1.5 1.5h16c.828 0 1.5-.672 1.5-1.5v-11.41c0-.13-.027-.257-.08-.376l-.035-.076zm-9.385 10.3c-2.761 0-5-2.239-5-5s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5zm0-8.5c-1.933 0-3.5 1.567-3.5 3.5s1.567 3.5 3.5 3.5 3.5-1.567 3.5-3.5-1.567-3.5-3.5-3.5z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Botón Enviar / Microfono -->
+            <button 
+                id="send-btn"
+                class="rounded-full w-11 h-11 flex items-center justify-center shrink-0 transition-colors bg-[#00a884] text-white hover:bg-[#008f6f]"
+            >
+                <svg id="mic-icon" viewBox="0 0 24 24" width="24" height="24" class="fill-current">
+                    <path d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.469 2.35 8.469 4.35v7.061c0 2.001 1.53 3.53 3.53 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2z" />
+                </svg>
+                <svg id="send-icon" viewBox="0 0 24 24" width="24" height="24" class="fill-current ml-1 hidden">
+                    <path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const chatForm = document.getElementById('chat-form');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const micIcon = document.getElementById('mic-icon');
+        const sendIcon = document.getElementById('send-icon');
+        const statusText = document.getElementById('status-text');
+
+        // Historial de la API para mantener el contexto
+        let apiChatHistory = [];
+        let isTyping = false;
+
+        // Función para obtener la hora actual
+        const getTime = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Instrucciones del sistema para Gemini
+        const systemInstruction = `Eres Jesús de Nazaret, chateando por WhatsApp con un estudiante o miembro de la comunidad educativa durante la "Semana de la Identidad Católica". 
+
+El lema principal de esta semana es: "Formar a Cristo en ti; dignidad que se nota, identidad que se vive". Tu objetivo principal es ayudar al usuario a interiorizar este lema.
+
+En tus respuestas, debes ser compasivo, amoroso, sabio y paciente. Tienes que guiar la conversación utilizando activamente y dando sentido profundo a los siguientes verbos y conceptos clave de la semana:
+- "Ver" (mirar a los demás con compasión, reconocer la dignidad)
+- "Oír" (escuchar activamente las necesidades del otro y la voz de Dios)
+- "Desarmar" (quitar los prejuicios, la violencia, y abrir el corazón)
+- "Servir" (ayudar al prójimo como expresión máxima de amor)
+- "Caminar" (avanzar juntos en la fe, acompañar)
+- "La paz" (el resultado de vivir todo lo anterior, el don que tú ofreces).
+
+Reglas de tono y estilo:
+- Responde siempre en español, con un tono cercano, consolador, gentil y esperanzador, como un amigo íntimo pero con autoridad divina.
+- Mantén la ilusión de que están chateando contigo en WhatsApp.
+- Usa emojis de vez en cuando de forma sutil y apropiada (ej. 🕊️, ❤️, ✨, 🙏, 👣, 👂).
+- Sé conciso en tus mensajes, adecuados para un chat, a menos que se requiera una explicación más profunda de una enseñanza.
+- Haz preguntas reflexivas para que el usuario "camine" hacia sus propias conclusiones sobre cómo vivir su identidad católica.`;
+
+        const scrollToBottom = () => {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        };
+
+        const toggleIcons = () => {
+            if (messageInput.value.trim().length > 0) {
+                micIcon.classList.add('hidden');
+                sendIcon.classList.remove('hidden');
+            } else {
+                micIcon.classList.remove('hidden');
+                sendIcon.classList.add('hidden');
+            }
+        };
+
+        const appendMessage = (text, sender, timestamp) => {
+            const isUser = sender === 'user';
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+
+            // Burbuja de chat SVG
+            const tailSvgUser = `<div class="absolute top-0 w-3 h-3 -right-2">
+                <svg viewBox="0 0 8 13" width="8" height="13" class="fill-current text-[#d9fdd3]">
+                    <path opacity="1" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z" />
+                </svg>
+            </div>`;
+            const tailSvgJesus = `<div class="absolute top-0 w-3 h-3 -left-2">
+                <svg viewBox="0 0 8 13" width="8" height="13" class="fill-current text-white">
+                    <path opacity="1" d="M1.533 3.568L8 12.193V1H2.812C1.042 1 .474 2.156 1.533 3.568z" />
+                </svg>
+            </div>`;
+
+            // Checks de lectura
+            const readChecks = isUser ? `
+                <svg viewBox="0 0 16 15" width="16" height="15" class="fill-current text-[#53bdeb] ml-1">
+                    <path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.32.32 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" />
+                </svg>` : '';
+
+            messageDiv.innerHTML = `
+                <div class="relative max-w-[80%] px-3 py-2 rounded-lg shadow-sm text-sm ${isUser ? 'bg-[#d9fdd3] rounded-tr-none text-gray-800' : 'bg-white rounded-tl-none text-gray-800'}">
+                    ${isUser ? tailSvgUser : tailSvgJesus}
+                    <span class="whitespace-pre-wrap break-words">${text}</span>
+                    <div class="flex justify-end items-center mt-1 space-x-1">
+                        <span class="text-[10px] text-gray-500">${timestamp}</span>
+                        ${readChecks}
+                    </div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(messageDiv);
+            scrollToBottom();
+        };
+
+        const generateJesusResponse = async (userText) => {
+            if (isTyping) return;
+            
+            isTyping = true;
+            statusText.textContent = 'escribiendo...';
+            messageInput.disabled = true;
+
+            const apiKey = ""; // Canvas provee la API Key en tiempo de ejecución
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const newHistory = [...apiChatHistory, { role: 'user', parts: [{ text: userText }] }];
+
+            const payload = {
+                contents: newHistory,
+                systemInstruction: {
+                    parts: [{ text: systemInstruction }]
+                }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates.length > 0) {
+                    const replyText = data.candidates[0].content.parts[0].text;
+                    
+                    appendMessage(replyText, 'jesus', getTime());
+
+                    // Actualizar el historial de la API
+                    apiChatHistory.push({ role: 'user', parts: [{ text: userText }] });
+                    apiChatHistory.push({ role: 'model', parts: [{ text: replyText }] });
+                } else {
+                    throw new Error("Sin respuesta de la API");
+                }
+            } catch (error) {
+                console.error("Error al generar respuesta:", error);
+                appendMessage('Lo siento, ha habido una interferencia terrenal. ¿Podrías repetirlo?', 'jesus', getTime());
+            } finally {
+                isTyping = false;
+                statusText.textContent = 'en línea';
+                messageInput.disabled = false;
+                messageInput.focus();
+            }
+        };
+
+        const handleSend = (e) => {
+            if (e) e.preventDefault();
+            
+            const text = messageInput.value.trim();
+            if (!text || isTyping) return;
+
+            // Limpiar input y volver a estado del microfono
+            messageInput.value = '';
+            toggleIcons();
+
+            // Mensaje del usuario
+            appendMessage(text, 'user', getTime());
+
+            // Respuesta de Jesús
+            generateJesusResponse(text);
+        };
+
+        // Event Listeners
+        chatForm.addEventListener('submit', handleSend);
+        sendBtn.addEventListener('click', handleSend);
+        messageInput.addEventListener('input', toggleIcons);
+
+        // Mensaje inicial de Jesús
+        window.onload = () => {
+            appendMessage(
+                '¡La paz sea contigo! 🕊️ Qué alegría encontrarnos en esta Semana de la Identidad Católica. Estoy aquí para ayudarte a formar mi corazón en el tuyo. Recuerda: tu dignidad se nota cuando vives tu identidad. ¿Cómo te sientes hoy en este caminar?', 
+                'jesus', 
+                getTime()
+            );
+        };
+    </script>
+</body>
+</html>
